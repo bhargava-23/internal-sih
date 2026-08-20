@@ -1,0 +1,192 @@
+[
+  {
+    "id": "SCN-001",
+    "name": "healthy_monitoring",
+    "title": "Healthy Root Zone",
+    "purpose": "Demonstrate a stable field where no irrigation is currently required.",
+    "seed": 101,
+    "duration_hours": 24,
+    "crop": "tomato",
+    "growth_stage": "flowering",
+    "soil_texture": "loam",
+    "root_zone_depth_m": 0.6,
+    "field_area_m2": 100.0,
+    "initial_root_zone_moisture": 0.28,
+    "environment": {
+      "temperature_c": 28.0,
+      "relative_humidity_pct": 65.0,
+      "wind_m_s": 2.0,
+      "radiation_mj_m2_day": 15.0,
+      "rainfall_mm": 0.0
+    },
+    "forecast": {
+      "rainfall_next_24h_mm": 0.0,
+      "temperature_mean_c": 27.0,
+      "humidity_mean_pct": 68.0,
+      "wind_mean_m_s": 1.8
+    },
+    "irrigation": {
+      "previous_24h_l": 0.0,
+      "flow_l_min": 5.0,
+      "pressure_bar": 1.8
+    },
+    "expected": {
+      "current_irrigation_required": false,
+      "valve_state": "CLOSED",
+      "anomaly": false
+    }
+  },
+  {
+    "id": "SCN-002",
+    "name": "drying_irrigation_trigger",
+    "title": "Drying Field / Irrigation Required",
+    "purpose": "Demonstrate falling root-zone moisture, elevated evaporative demand, predictive drying and simulated irrigation.",
+    "seed": 202,
+    "duration_hours": 24,
+    "crop": "tomato",
+    "growth_stage": "flowering",
+    "soil_texture": "loam",
+    "root_zone_depth_m": 0.6,
+    "field_area_m2": 100.0,
+    "initial_root_zone_moisture": 0.205,
+    "environment": {
+      "temperature_c": 35.0,
+      "relative_humidity_pct": 40.0,
+      "wind_m_s": 3.0,
+      "radiation_mj_m2_day": 22.0,
+      "rainfall_mm": 0.0
+    },
+    "forecast": {
+      "rainfall_next_24h_mm": 0.0,
+      "temperature_mean_c": 34.0,
+      "humidity_mean_pct": 42.0,
+      "wind_mean_m_s": 3.2
+    },
+    "irrigation": {
+      "previous_24h_l": 0.0,
+      "flow_l_min": 5.0,
+      "pressure_bar": 1.8
+    },
+    "expected": {
+      "current_irrigation_required": true,
+      "valve_state": "OPEN_THEN_CLOSE_AFTER_TARGET",
+      "anomaly": false
+    }
+  },
+  {
+    "id": "SCN-003",
+    "name": "rain_incoming",
+    "title": "Rain Forecast / Irrigation Deferred",
+    "purpose": "Demonstrate the value of forecast weather in the 24-hour physics-forward forecast and XGBoost feature set.",
+    "seed": 303,
+    "duration_hours": 24,
+    "crop": "tomato",
+    "growth_stage": "flowering",
+    "soil_texture": "loam",
+    "root_zone_depth_m": 0.6,
+    "field_area_m2": 100.0,
+    "initial_root_zone_moisture": 0.245,
+    "environment": {
+      "temperature_c": 30.0,
+      "relative_humidity_pct": 55.0,
+      "wind_m_s": 2.2,
+      "radiation_mj_m2_day": 17.0,
+      "rainfall_mm": 0.0
+    },
+    "forecast": {
+      "rainfall_next_24h_mm": 18.0,
+      "temperature_mean_c": 28.0,
+      "humidity_mean_pct": 74.0,
+      "wind_mean_m_s": 1.8
+    },
+    "irrigation": {
+      "previous_24h_l": 0.0,
+      "flow_l_min": 5.0,
+      "pressure_bar": 1.8
+    },
+    "expected": {
+      "current_irrigation_required": false,
+      "predicted_future_state_should_show_rain_benefit": true,
+      "valve_state": "CLOSED",
+      "anomaly": false
+    }
+  },
+  {
+    "id": "SCN-004",
+    "name": "high_et_heat",
+    "title": "High ET / Heat Stress",
+    "purpose": "Demonstrate increased ET0/ETc and accelerated moisture depletion under hot, dry atmospheric conditions.",
+    "seed": 404,
+    "duration_hours": 24,
+    "crop": "tomato",
+    "growth_stage": "flowering",
+    "soil_texture": "loam",
+    "root_zone_depth_m": 0.6,
+    "field_area_m2": 100.0,
+    "initial_root_zone_moisture": 0.24,
+    "environment": {
+      "temperature_c": 39.0,
+      "relative_humidity_pct": 25.0,
+      "wind_m_s": 4.0,
+      "radiation_mj_m2_day": 25.0,
+      "rainfall_mm": 0.0
+    },
+    "forecast": {
+      "rainfall_next_24h_mm": 0.0,
+      "temperature_mean_c": 38.0,
+      "humidity_mean_pct": 27.0,
+      "wind_mean_m_s": 4.2
+    },
+    "irrigation": {
+      "previous_24h_l": 0.0,
+      "flow_l_min": 5.0,
+      "pressure_bar": 1.8
+    },
+    "expected": {
+      "et0_relative_to_healthy": "HIGHER",
+      "etc_relative_to_healthy": "HIGHER",
+      "future_moisture_relative_to_healthy": "LOWER",
+      "anomaly": false
+    }
+  },
+  {
+    "id": "SCN-005",
+    "name": "delivery_anomaly",
+    "title": "Valve / Hydraulic Delivery Anomaly",
+    "purpose": "Demonstrate closed-loop verification when actual flow is lower than commanded delivery.",
+    "seed": 505,
+    "duration_hours": 6,
+    "crop": "tomato",
+    "growth_stage": "flowering",
+    "soil_texture": "loam",
+    "root_zone_depth_m": 0.6,
+    "field_area_m2": 100.0,
+    "initial_root_zone_moisture": 0.205,
+    "environment": {
+      "temperature_c": 34.0,
+      "relative_humidity_pct": 40.0,
+      "wind_m_s": 3.0,
+      "radiation_mj_m2_day": 21.0,
+      "rainfall_mm": 0.0
+    },
+    "forecast": {
+      "rainfall_next_24h_mm": 0.0,
+      "temperature_mean_c": 33.0,
+      "humidity_mean_pct": 42.0,
+      "wind_mean_m_s": 3.0
+    },
+    "irrigation": {
+      "commanded_flow_l_min": 5.0,
+      "actual_flow_l_min": 2.2,
+      "commanded_pressure_bar": 1.8,
+      "actual_pressure_bar": 1.0,
+      "previous_24h_l": 0.0
+    },
+    "expected": {
+      "current_irrigation_required": true,
+      "valve_state": "OPEN",
+      "anomaly": true,
+      "anomaly_type": "DELIVERY_DEVIATION"
+    }
+  }
+]
