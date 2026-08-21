@@ -225,7 +225,40 @@ class Layer1Result:
     # Root-zone state
     depletion_mm: float
 
+    # ET — Kc added for §8 traceability (was missing from the T0-01 draft)
+    Kc: float
+    """Crop coefficient used for this cycle, dimensionless (input echo)."""
+
     # Decision
     irrigation_trigger: bool
     net_irrigation_mm: float
     gross_irrigation_mm: float
+
+    # Prescription — outputs introduced by T1-05
+    water_volume_litres: float
+    """Total water volume required, litres.  0 when no irrigation triggered."""
+
+    valve_runtime_minutes: float
+    """Calculated valve open duration, minutes.  0 when no irrigation triggered."""
+
+    # Soil / zone traceability echoes — required by §8 logging schema
+    theta_FC: float
+    """Field-capacity VWC, m³/m³ (input echo)."""
+
+    theta_WP: float
+    """Wilting-point VWC, m³/m³ (input echo)."""
+
+    Zr_m: float
+    """Effective root-zone depth, m (input echo)."""
+
+    theta_current: float
+    """Current root-zone VWC from sensor/simulation, m³/m³ (input echo)."""
+
+    field_area_m2: float
+    """Irrigated zone area, m² (input echo)."""
+
+    application_efficiency: float
+    """System application efficiency E_a, dimensionless (input echo)."""
+
+    flow_rate_l_min: float
+    """Nominal zone flow rate, L/min (input echo)."""
